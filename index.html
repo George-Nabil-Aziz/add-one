@@ -27,6 +27,7 @@
         getDatabase,
         ref,
         onValue,
+        get,
         set,
       } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 
@@ -57,8 +58,11 @@
       // Increment the counter
       const button = document.getElementById("incrementButton");
       button.addEventListener("click", async () => {
-        const currentSnapshot = await ref(database, "counter").get();
+        // Correct way to get data from the reference
+        const currentSnapshot = await get(counterRef);
         const currentCount = currentSnapshot.val() || 0;
+
+        // Set the new counter value
         set(counterRef, currentCount + 1);
       });
     </script>
