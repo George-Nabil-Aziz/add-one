@@ -1,30 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shared Counter</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      margin: 10px;
-      cursor: pointer;
-    }
-    p {
-      font-size: 24px;
-    }
-  </style>
-</head>
-<body>
-  <button id="incrementButton">+1</button>
-  <p id="counter">0</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Counter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 18px;
+        margin: 10px;
+        cursor: pointer;
+      }
+      p {
+        font-size: 24px;
+      }
+    </style>
+    <!-- Firebase CDN -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        set,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 
-  <script type="module" src="/script.js"></script>
-</body>
+      // Your Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyB4p3Wczid-ywrYYJKhPXoZjzCOqKIgTDY",
+        authDomain: "shamandy-c9f63.firebaseapp.com",
+        projectId: "shamandy-c9f63",
+        storageBucket: "shamandy-c9f63.firebasestorage.app",
+        messagingSenderId: "908715992592",
+        appId: "1:908715992592:web:318a6d4e710a9f35f44c95",
+        measurementId: "G-DKKF6KSSB8",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      // Reference to the counter
+      const counterRef = ref(database, "counter");
+
+      // Listen for real-time updates
+      onValue(counterRef, (snapshot) => {
+        const data = snapshot.val();
+        document.getElementById("counter").textContent = data || 0;
+      });
+
+      // Increment the counter
+      const button = document.getElementById("incrementButton");
+      button.addEventListener("click", async () => {
+        const currentSnapshot = await ref(database, "counter").get();
+        const currentCount = currentSnapshot.val() || 0;
+        set(counterRef, currentCount + 1);
+      });
+    </script>
+  </head>
+  <body>
+    <button id="incrementButton">+1</button>
+    <p id="counter">0</p>
+  </body>
 </html>

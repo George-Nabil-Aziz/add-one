@@ -12,6 +12,16 @@ const firebaseConfig = {
   appId: "YOUR_APP_ID",
 };
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyB4p3Wczid-ywrYYJKhPXoZjzCOqKIgTDY",
+//   authDomain: "shamandy-c9f63.firebaseapp.com",
+//   projectId: "shamandy-c9f63",
+//   storageBucket: "shamandy-c9f63.firebasestorage.app",
+//   messagingSenderId: "908715992592",
+//   appId: "1:908715992592:web:318a6d4e710a9f35f44c95",
+//   measurementId: "G-DKKF6KSSB8"
+// };
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
